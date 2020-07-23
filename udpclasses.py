@@ -11,6 +11,9 @@ class Evt_precip:
         self.hub_sn = hub_sn
         self.evt = evt
 
+    def doEvtPrecip(self):
+        return "This is the event: " + str(self.evt)
+
 class Evt_strike:
     def __init__(self,serial_number,typee,hub_sn,evt):
 
@@ -73,4 +76,3 @@ class Hub_status:
         self.stack = stack
         self.seq = seq
         self.fs = fs
-
