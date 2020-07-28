@@ -4,8 +4,8 @@ import pandas as pd
 #This file is a translation to Python of enum.ts
 
 class Evt_precip:
-    def __init__(self,serial_number,typee,hub_sn,evt):
 
+    def __init__(self,serial_number,typee,hub_sn,evt):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -15,24 +15,24 @@ class Evt_precip:
         return "This is the event: " + str(self.evt)
 
 class Evt_strike:
-    def __init__(self,serial_number,typee,hub_sn,evt):
 
+    def __init__(self,serial_number,typee,hub_sn,evt):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.evt = evt
 
 class Rapid_wind:
-    def __init__(self,serial_number,typee,hub_sn,ob):
 
+    def __init__(self,serial_number,typee,hub_sn,ob):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.ob = ob
 
 class Obs_air:
-    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
 
+    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -40,8 +40,8 @@ class Obs_air:
         self.firmware_revision = firmware_revision
 
 class Obs_sky:
-    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
 
+    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -49,9 +49,9 @@ class Obs_sky:
         self.firmware_revision = firmware_revision
 
 class Device_status:
+
     def __init__(self,serial_number,typee,hub_sn,timestamp,uptime,
                     voltage,firmware_revision,rssi,sensor_status):
-
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -63,9 +63,9 @@ class Device_status:
         self.sensor_status = sensor_status
 
 class Hub_status:
+    
     def __init__(self,serial_number,typee,firmware_revision,uptime,
                     rssi,timestamp,reset_flags,stack,seq,fs):
-
         self.serial_number = serial_number
         self.typee = typee
         self.firmware_revision = firmware_revision
