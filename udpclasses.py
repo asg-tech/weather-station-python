@@ -11,8 +11,12 @@ class Evt_precip:
         self.hub_sn = hub_sn
         self.evt = evt
 
-    def doEvtPrecip(self):
-        return "This is the event: " + str(self.evt)
+    def unpacker(self,evt):
+        timeep = evt[0]
+        return timeep
+
+    def printme(self,time_epoch):
+        return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, time_epoch)
 
 class Evt_strike:
 
@@ -22,6 +26,15 @@ class Evt_strike:
         self.hub_sn = hub_sn
         self.evt = evt
 
+    def unpacker(self,evt):
+        timeep = evt[0]
+        Distance = evt[1]
+        Energy = evt[2]
+        return timeep, Distance, Energy
+
+    def printme(self,time_epoch, Distance, Energy):
+        return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Distance: {} meters, Energy: {}".format(self.serial_number, self.typee, self.hub_sn, time_epoch, Distance, Energy)
+
 class Rapid_wind:
 
     def __init__(self,serial_number,typee,hub_sn,ob):
@@ -29,6 +42,15 @@ class Rapid_wind:
         self.typee = typee
         self.hub_sn = hub_sn
         self.ob = ob
+
+    def unpacker(self,ob):
+        timeep = ob[0]
+        windspeed = ob[1]
+        winddirn = ob[2]
+        return timeep, windspeed, winddirn
+
+    def printme(self,time_epoch, windspeed, winddirn):
+        return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, WindSpeed: {} m/sec, WindDirection: {} Degrees".format(self.serial_number, self.typee, self.hub_sn, time_epoch, windspeed, winddirn)
 
 class Obs_air:
 
@@ -63,7 +85,7 @@ class Device_status:
         self.sensor_status = sensor_status
 
 class Hub_status:
-    
+
     def __init__(self,serial_number,typee,firmware_revision,uptime,
                     rssi,timestamp,reset_flags,stack,seq,fs):
         self.serial_number = serial_number

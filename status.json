@@ -7,7 +7,7 @@
     "voltage": 3.50,
     "firmware_revision": 17,
     "rssi": -17,
-    "hub_rssi": -87
+    "hub_rssi": -87,
     "sensor_status": 0,
     "debug": 0
     }
