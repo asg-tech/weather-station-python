@@ -5,7 +5,7 @@ import argparse
 
 PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
 
-with open(PATH_JSON + 'wind.json') as json_data:
+with open(PATH_JSON + 'air.json') as json_data:
     json_data = json.load(json_data)
 
 
@@ -40,6 +40,16 @@ def sorter(json_in):
         windclass = udpclasses.Rapid_wind(serialnum,typee,hubsn,ob)
         timeep, wspeed, wdirn = windclass.unpacker(ob)
         print(windclass.printme(timeep, wspeed, wdirn))
+
+    if (event_type == "obs_air"):
+        serialnum = json_in['serial_number']
+        typee = json_in['type']
+        hubsn = json_in['hub_sn']
+        obs = json_in['obs']
+        firmwarerev = json_in['firmware_revision']
+        airclass = udpclasses.Obs_air(serialnum,typee,hubsn,obs,firmwarerev)
+        timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint = airclass.unpacker(obs)
+        print(airclass.printme(timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint))
 
 sorter(json_data)
 """     msg_type = json_in.type

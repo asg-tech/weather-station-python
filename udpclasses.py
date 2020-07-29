@@ -61,13 +61,27 @@ class Obs_air:
         self.obs = obs
         self.firmware_revision = firmware_revision
 
+    def unpacker(self,obs):
+        timeep = obs[0][0]
+        stationpress = obs[0][1]
+        airtemp = obs[0][2]
+        relhumid = obs[0][3]
+        lgtnstrike = obs[0][4]
+        lgtnstrikedist_avg = obs[0][5]
+        battery = obs[0][6]
+        reportint = obs[0][7]
+        return timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint
+
+    def printme(self,timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint):
+        return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Station Pressure: {} MB, Air Temp: {} C, Relative Humidity {} %, LightningStrikeCount {}, Lightning Strike Avg Distance {} Km, Battery {}, Report Interval {} Mins".format(self.serial_number, self.typee, self.hub_sn, timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint)
+
 class Obs_sky:
 
     def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
-        self.obs = obs
+        self.obs = obsstationpress
         self.firmware_revision = firmware_revision
 
 class Device_status:
