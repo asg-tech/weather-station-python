@@ -3,6 +3,7 @@ import pandas as pd
 
 #This file is a translation to Python of enum.ts
 
+#This class is catering to the event of precipitation
 class Evt_precip:
 
     def __init__(self,serial_number,typee,hub_sn,evt):
@@ -20,6 +21,7 @@ class Evt_precip:
         #return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, time_epoch)
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep))
 
+#This class is catering to the event of Lightning Strike
 class Evt_strike:
 
     def __init__(self,serial_number,typee,hub_sn,evt):
@@ -38,6 +40,7 @@ class Evt_strike:
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Distance: {} meters, Energy: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.Distance, self.Energy))
 
+#This class is catering to the event of High Winds
 class Rapid_wind:
 
     def __init__(self,serial_number,typee,hub_sn,ob):
@@ -68,6 +71,7 @@ class Rapid_wind:
         elif self.winddirn == 180:
             self.winddirn == 0
 
+#This class is catering to the event of Observing Air
 class Obs_air:
 
     def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
@@ -92,6 +96,7 @@ class Obs_air:
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Station Pressure: {} MB, Air Temp: {} C, Relative Humidity {} %, LightningStrikeCount {}, Lightning Strike Avg Distance {} Km, Battery {}, Report Interval {} Mins, Firmware Rev: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.stationpress, self.airtemp, self.relhumid, self.lgtnstrike, self.lgtnstrikedist_avg, self.battery, self.reportint, self.firmware_revision))
 
+#This class is catering to the event of Observing the Sky
 class Obs_sky:
 
     def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
@@ -135,6 +140,7 @@ class Obs_sky:
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Illumination: {} Lux, UltraViolet: {} Index, Rain Accumulated: {} mm, Wind Lull: {} m/s, Wind Avg: {} m/s, Wind Gust: {} m/s, Wind Direction: {} Degrees, Battery: {} Volts, Report Interval: {} Minutes, Solar Radiation: {} W/m2, Local Day Rain Accumulation: {} mm, Precipitation Type: {}, Wind Sample Interval: {} secs, Firmware Version: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.illum, self.ultravio, self.rainAccum, self.windLull, self.windAvg, self.windGust, self.windDir, self.battery, self.reportint, self.solarRad, self.locrainAccum, self.precipType, self.windSampInt, self.firmware_revision))
 
+#This class is catering to the monitoring the Device Status
 class Device_status:
 
     def __init__(self, serial_number, typee, hub_sn, timestamp, uptime,
@@ -155,7 +161,7 @@ class Device_status:
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_stamp: {} seconds, Uptime: {} Secs, Voltage: {} Volts, Firmware Rev: {}, RSSI: {}, HUB_RSSI: {}, Sensor Status: {}, Debug Flag: {}".format(self.serial_number, self.typee, self.hub_sn, self.timestamp, self.uptime, self.voltage, self.firmware_revision, self.rssi, self.hub_rssi, self.sensor_status, self.debug))
 
-
+#This class is catering to the monitoring the Hub Status
 class Hub_status:
 
     def __init__(self, serialnum, typee, uptime,rssi, timestamp, resetflags, seq, fs,

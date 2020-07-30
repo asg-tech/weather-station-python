@@ -36,9 +36,7 @@ def sorter(json_in):
         hubsn = json_in['hub_sn']
         ob = json_in['ob']
         udpclasses.Rapid_wind(serialnum,typee,hubsn,ob)
-        # timeep, wspeed, wdirn = windclass.unpacker(ob)
-        # print(windclass.printme(timeep, wspeed, wdirn))
-
+        
     if (event_type == "obs_air"):
         serialnum = json_in['serial_number']
         typee = json_in['type']
@@ -46,9 +44,7 @@ def sorter(json_in):
         obs = json_in['obs']
         firmwarerev = json_in['firmware_revision']
         udpclasses.Obs_air(serialnum,typee,hubsn,obs,firmwarerev)
-        # timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint = airclass.unpacker(obs)
-        # print(airclass.printme(timeep, stationpress, airtemp, relhumid, lgtnstrike, lgtnstrikedist_avg, battery, reportint))
-
+        
     if (event_type == "obs_sky"):
         serialnum = json_in['serial_number']
         typee = json_in['type']
