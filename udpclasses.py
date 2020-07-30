@@ -56,16 +56,17 @@ class Rapid_wind:
 
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, WindSpeed: {} m/sec, WindDirection: {} Degrees".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.windspeed, self.winddirn))
-
+    #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
+    #Hemisphere and we are using this device in the Southern Hemisphere.
     def transform_winddir(self):
-        if self.winddirn > 180 or self.winddirn <= 360:
+        if self.winddirn > 180:
             self.winddirn = self.winddirn - 180
-        elif self.winddirn < 180 or self.winddirn >= 0:
+        elif self.winddirn < 180:
             self.winddirn = self.winddirn + 180
         elif self.winddirn == 0 or self.winddirn == 360:
             self.winddirn == 180
-        elif self.windDir == 180:
-            self.windDir == 0
+        elif self.winddirn == 180:
+            self.winddirn == 0
 
 class Obs_air:
 
@@ -119,10 +120,12 @@ class Obs_sky:
         self.precipType = self.obs[0][12]
         self.windSampInt = self.obs[0][13]
 
+    #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
+    #Hemisphere and we are using this device in the Southern Hemisphere.
     def transform_winddir(self):
-        if self.windDir > 180 or self.windDir < 360:
+        if self.windDir > 180:
             self.windDir = self.windDir - 180
-        elif self.windDir < 180 or self.windDir > 0:
+        elif self.windDir < 180:
             self.windDir = self.windDir + 180
         elif self.windDir == 0 or self.windDir == 360:
             self.windDir == 180
@@ -134,8 +137,8 @@ class Obs_sky:
 
 class Device_status:
 
-    def __init__(self,serial_number,typee,hub_sn,timestamp,uptime,
-                    voltage,firmware_revision,rssi,sensor_status):
+    def __init__(self, serial_number, typee, hub_sn, timestamp, uptime,
+                    voltage, firmware_revision, rssi, hub_rssi, sensor_status, debug):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -144,19 +147,30 @@ class Device_status:
         self.voltage = voltage
         self.firmware_revision = firmware_revision
         self.rssi = rssi
+        self.hub_rssi = hub_rssi
         self.sensor_status = sensor_status
+        self.debug = debug
+        self.printme()
+
+    def printme(self):
+        print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_stamp: {} seconds, Uptime: {} Secs, Voltage: {} Volts, Firmware Rev: {}, RSSI: {}, HUB_RSSI: {}, Sensor Status: {}, Debug Flag: {}".format(self.serial_number, self.typee, self.hub_sn, self.timestamp, self.uptime, self.voltage, self.firmware_revision, self.rssi, self.hub_rssi, self.sensor_status, self.debug))
+
 
 class Hub_status:
 
-    def __init__(self,serial_number,typee,firmware_revision,uptime,
-                    rssi,timestamp,reset_flags,stack,seq,fs):
-        self.serial_number = serial_number
+    def __init__(self, serialnum, typee, uptime,rssi, timestamp, resetflags, seq, fs,
+                                radiostats, mqttstats):
+        self.serialnum = serialnum
         self.typee = typee
-        self.firmware_revision = firmware_revision
         self.uptime = uptime
         self.rssi = rssi
         self.timestamp = timestamp
-        self.reset_flags = reset_flags
-        self.stack = stack
+        self.resetflags = resetflags
         self.seq = seq
         self.fs = fs
+        self.radiostats = radiostats
+        self.mqttstats = mqttstats
+        self.printme()
+
+    def printme(self):
+        print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, Up Time: {} Seconds, RSSI: {}, Time Stamp: {} Secs, Reset Flags: {}, Seq: {}, FS: {}, Radio Stats: {}, MQTT STATS: {}".format(self.serialnum, self.typee, self.uptime, self.rssi, self.timestamp, self.resetflags, self.seq, self.fs, self.radiostats, self.mqttstats))

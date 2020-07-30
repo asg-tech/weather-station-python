@@ -7,7 +7,7 @@ import argparse
 
 PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
 
-with open(PATH_JSON + 'sky.json') as json_data:
+with open(PATH_JSON + 'air.json') as json_data:
     json_data = json.load(json_data)
 
 
@@ -56,26 +56,34 @@ def sorter(json_in):
         obs = json_in['obs']
         firmwarerev = json_in['firmware_revision']
         udpclasses.Obs_sky(serialnum,typee,hubsn,obs, firmwarerev)
-        
+    
+    if (event_type == "device_status"):
+        serialnum = json_in['serial_number']
+        typee = json_in['type']
+        hubsn = json_in['hub_sn']
+        timestamp = json_in['timestamp']
+        uptime = json_in['uptime']
+        voltage = json_in['voltage']
+        firmwarerev = json_in['firmware_revision']
+        rssi = json_in['rssi']
+        hub_rssi = json_in['hub_rssi']
+        sensor_status = json_in['sensor_status']
+        debug = json_in['debug']
+        udpclasses.Device_status(serialnum,typee,hubsn,timestamp,uptime,voltage,
+                                firmwarerev,rssi,hub_rssi,sensor_status,debug)
+
+    if (event_type == "hub_status"):
+        serialnum = json_in['serial_number']
+        typee = json_in['type']
+        uptime = json_in['uptime']
+        rssi = json_in['rssi']
+        timestamp = json_in['timestamp']
+        resetflags = json_in['reset_flags']
+        seq = json_in['seq']
+        fs = json_in['fs']
+        radiostats = json_in['radio_stats']
+        mqttstats = json_in['mqtt_stats']
+        udpclasses.Hub_status(serialnum,typee,uptime,rssi,timestamp,resetflags,seq,fs,
+                                radiostats,mqttstats)
 
 sorter(json_data)
-"""     msg_type = json_in.type
-
-    switch(msg_type):
-        case: "evt_precip":
-        classpricp = new Evnt_pricip(json_in , etc)
-        # inside your class unpack the array into key : value pairs ie {rain: 2}
-        classpricp.printme()
-        break """
-
-""" #Pseudo Code:
-test = new evt_precip(stike.serial, strike.type, strike.obs, stirke.idk)
-switch herer
-
-array = obs
-volts = obs[3]
-meters = obs[2]
-time = obs[0]
-
-def printme():
-    print("type: {} serial {} idk {} volts: {} meters{} time {} ".format(type, serial, volrts, meters, time)) """
