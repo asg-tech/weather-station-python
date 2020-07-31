@@ -2,17 +2,21 @@
 #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
 #Hemisphere and we are using this device in the Southern Hemisphere.
 import udpclasses
+import sendtocloud
 import json
 import argparse
+import socket
 
-PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
+# PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
 
-with open(PATH_JSON + 'air.json') as json_data:
-    json_data = json.load(json_data)
-
+# with open(PATH_JSON + 'air.json') as json_data:
+#     json_data = json.load(json_data)
 
 def sorter(json_in):
     event_type = json_in['type']
+
+    print("type received {}".format(event_type))
+
     if (event_type == "evt_precip"):
         serialnum = json_in['serial_number']
         typee = json_in['type']
@@ -82,4 +86,26 @@ def sorter(json_in):
         udpclasses.Hub_status(serialnum,typee,uptime,rssi,timestamp,resetflags,seq,fs,
                                 radiostats,mqttstats)
 
-sorter(json_data)
+
+def main():
+    server_address = ('192.168.88.251', 50222)
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock: # UDP
+        sock.settimeout(50)
+        sock.bind(server_address)
+        #sock.listen()
+        #s.setblocking(0)
+        running = True
+        while running:
+            try:
+                data,addr = sock.recvfrom(4096) # buffer size is 1024 bytes
+                #print("received message: %s" % data)
+                json_data = json.loads(data.decode('utf-8'))
+                sorter(json_data)
+
+            except KeyboardInterrupt:
+                print("Pressing ctrl+C has terminated your the while loop")
+                running = False
+                sock.close()
+                break
+
+main()

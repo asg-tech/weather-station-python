@@ -18,7 +18,7 @@ class Evt_precip:
         self.timeep = self.evt[0]
 
     def printme(self):
-        #return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, time_epoch)
+        #return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep)
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep))
 
 #This class is catering to the event of Lightning Strike
