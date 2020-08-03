@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
+import json
 
 #This file is a translation to Python of enum.ts
+
+#Instantiate Class object from sendtocloud.py
 
 #This class is catering to the event of precipitation
 class Evt_precip:
@@ -12,7 +15,6 @@ class Evt_precip:
         self.hub_sn = hub_sn
         self.evt = evt
         self.unpacker()
-        self.printme()
 
     def unpacker(self):
         self.timeep = self.evt[0]
@@ -20,6 +22,9 @@ class Evt_precip:
     def printme(self):
         #return "THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep)
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep))
+        # data_set = {"SerialNumber": self.serial_number, "Type": self.typee, "Hub_Serial_Number": self.hub_sn, "Time_Epoch": self.timeep}
+        # json_object = json.dumps(data_set)
+        # return json_object
 
 #This class is catering to the event of Lightning Strike
 class Evt_strike:
@@ -30,7 +35,6 @@ class Evt_strike:
         self.hub_sn = hub_sn
         self.evt = evt
         self.unpacker()
-        self.printme()
 
     def unpacker(self):
         self.timeep = self.evt[0]
@@ -39,6 +43,10 @@ class Evt_strike:
 
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Distance: {} meters, Energy: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.Distance, self.Energy))
+        #return [self.serial_number, self.typee, self.hub_sn, self.timeep, self.Distance, self.Energy]
+        # data_set = {"SerialNumber": self.serial_number, "Type": self.typee, "Hub_Serial_Number": self.hub_sn, "Time_Epoch": self.timeep, "Distance" = self.Distance, "Energy" = self.Energy}
+        # json_object = json.dumps(data_set)
+        # return json_object
 
 #This class is catering to the event of High Winds
 class Rapid_wind:
@@ -50,7 +58,6 @@ class Rapid_wind:
         self.ob = ob
         self.unpacker()
         self.transform_winddir()
-        self.printme()
 
     def unpacker(self):
         self.timeep = self.ob[0]
@@ -59,6 +66,10 @@ class Rapid_wind:
 
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, WindSpeed: {} m/sec, WindDirection: {} Degrees".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.windspeed, self.winddirn))
+        # data_set = {"SerialNumber": self.serial_number, "Type": self.typee, "Hub_Serial_Number": self.hub_sn, "Time_Epoch": self.timeep, "WindSpeed" = self.windspeed, "Wind_Direction" = self.winddirn}
+        # json_object = json.dumps(data_set)
+        # return json_object
+
     #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
     #Hemisphere and we are using this device in the Southern Hemisphere.
     def transform_winddir(self):
@@ -81,7 +92,6 @@ class Obs_air:
         self.obs = obs
         self.firmware_revision = firmware_revision
         self.unpacker()
-        self.printme()
 
     def unpacker(self):
         self.timeep = self.obs[0][0]
@@ -95,8 +105,8 @@ class Obs_air:
         
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Station Pressure: {} MB, Air Temp: {} C, Relative Humidity {} %, LightningStrikeCount {}, Lightning Strike Avg Distance {} Km, Battery {}, Report Interval {} Mins, Firmware Rev: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.stationpress, self.airtemp, self.relhumid, self.lgtnstrike, self.lgtnstrikedist_avg, self.battery, self.reportint, self.firmware_revision))
-
-#This class is catering to the event of Observing the Sky
+        
+        #This class is catering to the event of Observing the Sky
 class Obs_sky:
 
     def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
@@ -107,7 +117,6 @@ class Obs_sky:
         self.firmware_revision = firmware_revision
         self.unpacker()
         self.transform_winddir()
-        self.printme()
 
     def unpacker(self):
         self.timeep = self.obs[0][0]
@@ -156,7 +165,6 @@ class Device_status:
         self.hub_rssi = hub_rssi
         self.sensor_status = sensor_status
         self.debug = debug
-        self.printme()
 
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_stamp: {} seconds, Uptime: {} Secs, Voltage: {} Volts, Firmware Rev: {}, RSSI: {}, HUB_RSSI: {}, Sensor Status: {}, Debug Flag: {}".format(self.serial_number, self.typee, self.hub_sn, self.timestamp, self.uptime, self.voltage, self.firmware_revision, self.rssi, self.hub_rssi, self.sensor_status, self.debug))
@@ -176,7 +184,6 @@ class Hub_status:
         self.fs = fs
         self.radiostats = radiostats
         self.mqttstats = mqttstats
-        self.printme()
 
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, Up Time: {} Seconds, RSSI: {}, Time Stamp: {} Secs, Reset Flags: {}, Seq: {}, FS: {}, Radio Stats: {}, MQTT STATS: {}".format(self.serialnum, self.typee, self.uptime, self.rssi, self.timestamp, self.resetflags, self.seq, self.fs, self.radiostats, self.mqttstats))
