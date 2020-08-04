@@ -185,5 +185,17 @@ class Hub_status:
         self.radiostats = radiostats
         self.mqttstats = mqttstats
 
+    def unpacker(self):
+        self.version = self.radiostats[0]
+        self.rebootcount = self.radiostats[1]
+        self.buserror = self.radiostats[2]
+        
+        if self.radiostats[3] == 0:
+            self.radiopower = "OFF"
+        if self.radiostats[3] == 1:
+            self.radiopower = "ON"
+        if self.radiostats[3] == 3:
+            self.radiopower = "ACTIVE"
+
     def printme(self):
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, Up Time: {} Seconds, RSSI: {}, Time Stamp: {} Secs, Reset Flags: {}, Seq: {}, FS: {}, Radio Stats: {}, MQTT STATS: {}".format(self.serialnum, self.typee, self.uptime, self.rssi, self.timestamp, self.resetflags, self.seq, self.fs, self.radiostats, self.mqttstats))
