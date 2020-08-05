@@ -25,8 +25,7 @@ def sorter(json_in):
         event = json_in['evt']
         prec = udpclasses.Evt_precip(serialnum, typee, hubsn, event)
         #Convert to Json object
-        jsonStr = json.dumps(prec).__dict__
-        print(jsonStr)
+        jsonStr = json.dumps(prec.returnval())
         #Check with Glen
         # currentData.rain = rain;
         # rained++
@@ -40,7 +39,7 @@ def sorter(json_in):
         event = json_in['evt']
         strike = udpclasses.Evt_strike(serialnum,typee,hubsn,event)
         #Convert to Json object
-        jsonStr = json.dumps(strike.__dict__)
+        jsonStr = json.dumps(strike.returnval())
 
     #Caters to the Rapid Wind Observations
     if (event_type == "rapid_wind"):
@@ -51,7 +50,7 @@ def sorter(json_in):
         ob = json_in['ob']
         wind = udpclasses.Rapid_wind(serialnum,typee,hubsn,ob)
         #Convert to Json object
-        jsonStr = json.dumps(wind.__dict__)
+        jsonStr = json.dumps(wind.returnval())
         
     #Caters to the Air Observations
     if (event_type == "obs_air"):
@@ -63,7 +62,7 @@ def sorter(json_in):
         firmwarerev = json_in['firmware_revision']
         air = udpclasses.Obs_air(serialnum,typee,hubsn,obs,firmwarerev)
         #Convert to Json object
-        jsonStr = json.dumps(air.__dict__)
+        jsonStr = json.dumps(air.returnval())
     
     #Caters to the Sky Observations
     if (event_type == "obs_sky"):
@@ -76,7 +75,7 @@ def sorter(json_in):
         #Feed into CLass
         sky = udpclasses.Obs_sky(serialnum,typee,hubsn,obs, firmwarerev)
         #Convert to Json object
-        jsonStr = json.dumps(sky.__dict__)
+        jsonStr = json.dumps(sky.returnval())
     
     #Caters to the Device Status Event Type
     if (event_type == "device_status"):
@@ -96,7 +95,7 @@ def sorter(json_in):
         device = udpclasses.Device_status(serialnum,typee,hubsn,timestamp,uptime,voltage,
                                 firmwarerev,rssi,hub_rssi,sensor_status,debug)
         #Convert to Json object
-        jsonStr = json.dumps(device.__dict__)
+        jsonStr = json.dumps(device.returnval())
 
     #Caters to the Hub Status Event Type
     if (event_type == "hub_status"):
@@ -115,7 +114,7 @@ def sorter(json_in):
         hub = udpclasses.Hub_status(serialnum,typee,uptime,rssi,timestamp,resetflags,seq,fs,
                                 radiostats,mqttstats)
         #Convert to Json object
-        jsonStr = json.dumps(hub.__dict__)
+        jsonStr = json.dumps(hub.returnval())
 
     return jsonStr
 #Import Class sendtocloud as it contains method that sets up Azure

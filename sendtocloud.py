@@ -37,24 +37,24 @@ class QueueHelloWorldSamples(object):
         # [START create_queue]
         #queue.create_queue()
         # [END create_queue]
+        pass
+        # try:
+        #     # Send messages
+        #     #queue.send_queue_message(pushvar)
+        #     #queue.send_message(u"This is my second message")
+        #     print("try")
+        #     # Receive the messages
+        #     #response = queue.receive_queue_message()
 
-        try:
-            # Send messages
-            #queue.send_queue_message(pushvar)
-            #queue.send_message(u"This is my second message")
-            print("try")
-            # Receive the messages
-            #response = queue.receive_queue_message()
+        #     # Print the content of the messages
+        #     # for message in response:
+        #     #     print(message.content)
 
-            # Print the content of the messages
-            # for message in response:
-            #     print(message.content)
-
-        finally:
-            pass
-            # [START delete_queue]
-            # queue.delete_queue()
-            # [END delete_queue]
+        # finally:
+        #     pass
+        #     # [START delete_queue]
+        #     # queue.delete_queue()
+        #     # [END delete_queue]
 
 if __name__ == '__main__':
     #sample = QueueHelloWorldSamples()
