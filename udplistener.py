@@ -102,6 +102,7 @@ def sorter(json_in):
         #Unpack json to feed into the class
         serialnum = json_in['serial_number']
         typee = json_in['type']
+        firmwarerev = json_in['firmware_revision']
         uptime = json_in['uptime']
         rssi = json_in['rssi']
         timestamp = json_in['timestamp']
@@ -111,7 +112,7 @@ def sorter(json_in):
         radiostats = json_in['radio_stats']
         mqttstats = json_in['mqtt_stats']
         #Feed into CLass
-        hub = udpclasses.Hub_status(serialnum,typee,uptime,rssi,timestamp,resetflags,seq,fs,
+        hub = udpclasses.Hub_status(serialnum,typee, firmwarerev,uptime,rssi,timestamp,resetflags,seq,fs,
                                 radiostats,mqttstats)
         #Convert to Json object
         jsonStr = json.dumps(hub.returnval())
