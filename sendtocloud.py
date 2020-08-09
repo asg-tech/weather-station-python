@@ -22,39 +22,40 @@ class QueueHelloWorldSamples(object):
         try:
             conStr = 'Endpoint=sb://kanmessagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4nmSLvepaBF3xJUDe2tddYdJXeSnDgdcj2+WiN2GJwM='
             client = ServiceBusClient.from_connection_string(conStr)
-            return client.get_queue("weatherflowjsondatagaa")
+            return client.get_topic("weatherflowjsondatagaatp")
+            #return client.get_queue("weatherflowjsondatagaa")
 
         except:
             print("Azure setup error")
             return None
 
-    def queue_and_messages_example(self,pushvar):
-        # Instantiate the QueueClient from a connection string
-        #from azure.storage.queue import QueueClient
-        #queue = QueueClient.from_connection_string(conn_str='Endpoint=sb://kanmessagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey="4nmSLvepaBF3xJUDe2tddYdJXeSnDgdcj2+WiN2GJwM="', queue_name="weatherflowjsondatagaa")
-        #queue = ServiceBusService()
-        # Create the queue
-        # [START create_queue]
-        #queue.create_queue()
-        # [END create_queue]
-        pass
-        # try:
-        #     # Send messages
-        #     #queue.send_queue_message(pushvar)
-        #     #queue.send_message(u"This is my second message")
-        #     print("try")
-        #     # Receive the messages
-        #     #response = queue.receive_queue_message()
+    # def queue_and_messages_example(self,pushvar):
+    #     # Instantiate the QueueClient from a connection string
+    #     #from azure.storage.queue import QueueClient
+    #     #queue = QueueClient.from_connection_string(conn_str='Endpoint=sb://kanmessagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey="4nmSLvepaBF3xJUDe2tddYdJXeSnDgdcj2+WiN2GJwM="', queue_name="weatherflowjsondatagaa")
+    #     #queue = ServiceBusService()
+    #     # Create the queue
+    #     # [START create_queue]
+    #     #queue.create_queue()
+    #     # [END create_queue]
+    #     pass
+    #     # try:
+    #     #     # Send messages
+    #     #     #queue.send_queue_message(pushvar)
+    #     #     #queue.send_message(u"This is my second message")
+    #     #     print("try")
+    #     #     # Receive the messages
+    #     #     #response = queue.receive_queue_message()
 
-        #     # Print the content of the messages
-        #     # for message in response:
-        #     #     print(message.content)
+    #     #     # Print the content of the messages
+    #     #     # for message in response:
+    #     #     #     print(message.content)
 
-        # finally:
-        #     pass
-        #     # [START delete_queue]
-        #     # queue.delete_queue()
-        #     # [END delete_queue]
+    #     # finally:
+    #     #     pass
+    #     #     # [START delete_queue]
+    #     #     # queue.delete_queue()
+    #     #     # [END delete_queue]
 
 if __name__ == '__main__':
     #sample = QueueHelloWorldSamples()

@@ -164,7 +164,7 @@ class Obs_sky:
         "Rain_Accumulated": self.rainAccum, "Wind_Lull": self.windLull, "Wind_Avg": self.windAvg, 
         "Wind_Gust": self.windGust, "Wind_Direction": self.windDir, "Battery": self.battery, 
         "Report_Interval": self.reportint, "Solar_Radiation": self.solarRad, 
-        "Local_Day_Rain_Accumulation": self.locrainAccum, Precipitation_Type: self.precipType, 
+        "Local_Day_Rain_Accumulation": self.locrainAccum, "Precipitation_Type": self.precipType, 
         "Wind_Sample_Interval": self.windSampInt, "Firmware_Version": self.firmware_revision}
         return json_dict
 
@@ -197,6 +197,7 @@ class Device_status:
                     "Time_stamp": self.timestamp, "Uptime": self.uptime, "Voltage": self.voltage, 
                     "Firmware_Rev":self.firmware_revision, "RSSI": self.rssi, "Hub_RSSI": self.hub_rssi,
                     "Sensor_Status": self.sensor_status, "Debugging": self.debug}
+        return json_dict
 
 #This class is catering to the monitoring the Hub Status
 class Hub_status:
@@ -213,6 +214,7 @@ class Hub_status:
         self.fs = fs
         self.radiostats = radiostats
         self.mqttstats = mqttstats
+        self.unpacker()
 
     def unpacker(self):
         self.version = self.radiostats[0]
@@ -232,5 +234,6 @@ class Hub_status:
     def returnval(self):
         json_dict = {"serial_number": self.serialnum, "Event_Type": self.typee, "Uptime": self.uptime,
                     "RSSI": self.rssi, "Time_Stamp": self.timestamp, "Reset_Flags": self.resetflags,
-                    "Seq": self.seq, "FS": self.fs, "Version": self.version, "RebootCount":self.rebootcount,
+                    "Seq": self.seq, "FS": self.fs,"Version": self.version, "RebootCount":self.rebootcount,
                     "Bus_Error": self.buserror, "Radio_Power": self.radiopower, "MQTT_STATS": self.mqttstats}
+        return json_dict

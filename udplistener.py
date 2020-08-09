@@ -141,9 +141,12 @@ def main():
                 pushvar = sorter(json_data)     #Pushvar is a the return type of sorter method and is also a Json object
                 #For debugging only
                 print(pushvar)
-                setupqueue.send(Message(pushvar))          #Push message to Cloud
+                try:
+                    setupqueue.send(Message(pushvar))          #Push message to Cloud
+                except:
+                    print("Connection has dropped off: ")
                 #toCloud.create_client_with_connection_string()
-                toCloud.queue_and_messages_example(pushvar)
+                #toCloud.queue_and_messages_example(pushvar)
 
             #While loop is terminated if ctrl + C is pressed
             except KeyboardInterrupt:
