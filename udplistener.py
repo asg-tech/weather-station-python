@@ -5,14 +5,19 @@ import udpclasses
 import json
 import argparse
 import socket
-from azure.servicebus import Message
+import sys
+from sendtocloud import sendMessageToQueue
 # PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
+
+allowedMessageTypes = ["evt_precip", "evt_strike", "rapid_wind",
+ "obs_air", "obs_sky", "device_status", "hub_status"]
 
 # with open(PATH_JSON + 'air.json') as json_data:
 #     json_data = json.load(json_data)
 
 def sorter(json_in):
     event_type = json_in['type']
+    jsonStr = {"type":"none"}
 
     #print("type received {}".format(event_type))
 
@@ -121,13 +126,13 @@ def sorter(json_in):
 #Import Class sendtocloud as it contains method that sets up Azure
 import sendtocloud
 
-def main():
+def startloop():
     #Instantiate Class
-    toCloud = sendtocloud.QueueHelloWorldSamples()
+    #toCloud = sendtocloud.QueueHelloWorldSamples()
     #Instantiate the setup Azure method
-    setupqueue = toCloud.SetupAzure()
+    #setupqueue = toCloud.SetupAzure()
     #IP address from UDP programme for hub, always use socket as 50222
-    server_address = ('192.168.88.252', 50222)
+    server_address = ('0.0.0.0', 50222)
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock: # No need to cleanup sockets after while loop is terminated as using with statement
         sock.settimeout(50)     #Set a timeout so that if sockets does not receive any messages for 50 seconds, it is released.
         #bind socket to IP address
@@ -138,16 +143,16 @@ def main():
             try:
                 data,addr = sock.recvfrom(4096) # buffer size is 1024 bytes
                 #Load JSON object
-                json_data = json.loads(data.decode('utf-8'))
-                pushvar = sorter(json_data)     #Pushvar is a the return type of sorter method and is also a Json object
-                #For debugging only
-                print(pushvar)
-                try:
-                    setupqueue.send(Message(pushvar))          #Push message to Cloud
-                except:
-                    print("Connection has dropped off: ")
-                #toCloud.create_client_with_connection_string()
-                #toCloud.queue_and_messages_example(pushvar)
+                if(data):
+                    json_data = json.loads(data.decode('utf-8'))
+                    pushvar = sorter(json_data)     #Pushvar is a the return type of sorter method and is also a Json object
+                    #For debugging only
+
+                    #obs = json_data["type"]
+                    #print("obs decoded {}".format(obs))
+                    if json_data['type'] in allowedMessageTypes:
+                        sendMessageToQueue(pushvar)
+                        print(pushvar)
 
             #While loop is terminated if ctrl + C is pressed
             except KeyboardInterrupt:
@@ -156,4 +161,4 @@ def main():
                 sock.close()
                 break
 
-main()
+startloop()
