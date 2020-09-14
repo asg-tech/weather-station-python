@@ -134,7 +134,7 @@ def startloop():
     #IP address from UDP programme for hub, always use socket as 50222
     server_address = ('0.0.0.0', 50222)
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock: # No need to cleanup sockets after while loop is terminated as using with statement
-        sock.settimeout(50)     #Set a timeout so that if sockets does not receive any messages for 50 seconds, it is released.
+        sock.settimeout(120)     #Set a timeout so that if sockets does not receive any messages for 50 seconds, it is released.
         #bind socket to IP address
         sock.bind(server_address)
         running = True      #Set Flag to true
@@ -153,6 +153,12 @@ def startloop():
                     if json_data['type'] in allowedMessageTypes:
                         sendMessageToQueue(pushvar)
                         print(pushvar)
+            #socket timeout exception here
+            except socket.timeout:
+                print("Socket timeout 120 seconds with no messages")
+                running = False
+                sock.close()
+                break
 
             #While loop is terminated if ctrl + C is pressed
             except KeyboardInterrupt:
@@ -161,4 +167,6 @@ def startloop():
                 sock.close()
                 break
 
+print("UDPlistener starting -> ")
 startloop()
+print("->  Closing")
