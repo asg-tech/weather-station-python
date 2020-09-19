@@ -24,8 +24,12 @@ class Evt_precip:
         # return json_object
 
     def returnval(self):
-        json_dict = {"type": "evt_precip", "serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn, 
-                        "Time Epoch": self.timeep}
+        json_dict = {
+            "serial_number": self.serial_number,
+            "type": "evt_precip",
+            "hub_sn": self.hub_sn, 
+            "Time_Epoch": self.timeep
+            }
         return json_dict
 
 #This class is catering to the event of Lightning Strike
@@ -47,8 +51,14 @@ class Evt_strike:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Distance: {} meters, Energy: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.Distance, self.Energy))
     
     def returnval(self):
-        json_dict = {"type": "evt_strike", "serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn, 
-                    "Time Epoch": self.timeep, "Distance": self.Distance, "Energy": self.Energy}
+        json_dict = {
+            "serial_number": self.serial_number,
+            "type": "evt_strike",
+            "hub_sn": self.hub_sn, 
+            "Time_Epoch": self.timeep,
+            "Distance": self.Distance,
+            "Energy": self.Energy
+            }
         return json_dict
 
 #This class is catering to the event of High Winds
@@ -71,7 +81,13 @@ class Rapid_wind:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, WindSpeed: {} m/sec, WindDirection: {} Degrees".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.windspeed, self.winddirn))
         
     def returnval(self):
-        json_dict = {"type": "rapid_wind", "serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn, "Time Epoch": self.timeep, "Wind Speed": self.windspeed, "Wind Direction": self.winddirn}
+        json_dict = {
+            "serial_number": self.serial_number,
+            "type": "rapid_wind",
+            "hub_sn": self.hub_sn,
+            "Time_Epoch": self.timeep,
+            "Wind_Speed": self.windspeed,
+            "Wind_Direction": self.winddirn}
         return json_dict
 
     #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
@@ -111,7 +127,19 @@ class Obs_air:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Station Pressure: {} MB, Air Temp: {} C, Relative Humidity {} %, LightningStrikeCount {}, Lightning Strike Avg Distance {} Km, Battery {}, Report Interval {} Mins, Firmware Rev: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.stationpress, self.airtemp, self.relhumid, self.lgtnstrike, self.lgtnstrikedist_avg, self.battery, self.reportint, self.firmware_revision))
     
     def returnval(self):
-        json_dict = {"type":"obs_air", "serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn, "Time Epoch": self.timeep, "Station Pressure": self.stationpress, "Air Temperature": self.airtemp, "Relative Humidity": self.relhumid, "Lightning Strike Count": self.lgtnstrike, "Lightning Strike Avg Distance": self.lgtnstrikedist_avg, "Battery": self.battery, "Report Interval": self.reportint, "firmware_revision": self.firmware_revision}
+        json_dict = {
+            "serial_number": self.serial_number,
+            "type":"obs_air",
+            "hub_sn": self.hub_sn,
+            "Time_Epoch": self.timeep,
+            "Station_Pressure": self.stationpress,
+            "Air_Temperature": self.airtemp,
+            "Relative_Humidity": self.relhumid,
+            "Lightning_Strike_Count": self.lgtnstrike,
+            "Lightning_Strike_Avg_Distance": self.lgtnstrikedist_avg,
+            "Battery": self.battery,
+            "Report_Interval": self.reportint,
+            "firmware_revision": self.firmware_revision}
         return json_dict
 
         #This class is catering to the event of Observing the Sky
@@ -158,13 +186,27 @@ class Obs_sky:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_epoch: {} seconds, Illumination: {} Lux, UltraViolet: {} Index, Rain Accumulated: {} mm, Wind Lull: {} m/s, Wind Avg: {} m/s, Wind Gust: {} m/s, Wind Direction: {} Degrees, Battery: {} Volts, Report Interval: {} Minutes, Solar Radiation: {} W/m2, Local Day Rain Accumulation: {} mm, Precipitation Type: {}, Wind Sample Interval: {} secs, Firmware Version: {}".format(self.serial_number, self.typee, self.hub_sn, self.timeep, self.illum, self.ultravio, self.rainAccum, self.windLull, self.windAvg, self.windGust, self.windDir, self.battery, self.reportint, self.solarRad, self.locrainAccum, self.precipType, self.windSampInt, self.firmware_revision))
 
     def returnval(self):
-        json_dict = {"type":"obs_sky","serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn, 
-        "Time Epoch": self.timeep, "Illuminance": self.illum, "UV": self.ultravio, 
-        "Rain Accumulated": self.rainAccum, "Wind Lull": self.windLull, "Wind Avg": self.windAvg, 
-        "Wind Gust": self.windGust, "Wind Direction": self.windDir, "Battery": self.battery, 
-        "Report Interval": self.reportint, "Solar Radiation": self.solarRad, 
-        "Local Day Rain Accumulation": self.locrainAccum, "Precipitation Type": self.precipType, 
-        "Wind Sample Interval": self.windSampInt, "firmware_revision": self.firmware_revision}
+        json_dict = {
+            "serial_number": self.serial_number,
+            "type":"obs_sky",
+            "type": self.typee,
+            "hub_sn": self.hub_sn, 
+            "Epoch": self.timeep,
+            "Illuminance": self.illum,
+            "UV": self.ultravio, 
+            "Accumulated": self.rainAccum,
+            "Wind_Lull": self.windLull,
+            "Wind_Avg": self.windAvg, 
+            "Gust": self.windGust,
+            "Wind_Direction": self.windDir,
+            "Battery": self.battery, 
+            "Interval": self.reportint,
+            "Solar_Radiation": self.solarRad, 
+            "Local_Day_Rain_Accumulation": self.locrainAccum,
+            "Precipitation_Type": self.precipType, 
+            "Wind_Sample_Interval": self.windSampInt,
+            "firmware_revision": self.firmware_revision
+            }
         return json_dict
 
 #This class is catering to the monitoring the Device Status
@@ -192,10 +234,19 @@ class Device_status:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, hub_sn: {}, time_stamp: {} seconds, Uptime: {} Secs, Voltage: {} Volts, Firmware Rev: {}, RSSI: {}, HUB_RSSI: {}, Sensor Status: {}, Debug Flag: {}".format(self.serial_number, self.typee, self.hub_sn, self.timestamp, self.uptime, self.voltage, self.firmware_revision, self.rssi, self.hub_rssi, self.sensor_status, self.debug))
 
     def returnval(self):
-        json_dict = {"type":"device_status", "serial_number": self.serial_number, "type": self.typee, "hub_sn": self.hub_sn,
-                    "timestamp": self.timestamp, "uptime": self.uptime, "voltage": self.voltage, 
-                    "firmware_revision":self.firmware_revision, "rssi": self.rssi, "hub_rssi": self.hub_rssi,
-                    "sensor_status": self.sensor_status, "debug": self.debug}
+        json_dict = {
+            "type":"device_status",
+            "serial_number": self.serial_number,
+            "type": self.typee,
+            "hub_sn": self.hub_sn,
+            "timestamp": self.timestamp,
+            "uptime": self.uptime,
+            "voltage": self.voltage, 
+            "firmware_revision":self.firmware_revision,
+            "rssi": self.rssi,
+            "hub_rssi": self.hub_rssi,
+            "sensor_status": self.sensor_status,
+            "debug": self.debug}
         return json_dict
 
 #This class is catering to the monitoring the Hub Status
@@ -232,8 +283,19 @@ class Hub_status:
         print("THE UNPACKED VALUES ARE: Serial_Number: {}, type: {}, Up Time: {} Seconds, RSSI: {}, Time Stamp: {} Secs, Reset Flags: {}, Seq: {}, FS: {}, Radio Stats: {}, MQTT STATS: {}".format(self.serialnum, self.typee, self.uptime, self.rssi, self.timestamp, self.resetflags, self.seq, self.fs, self.radiostats, self.mqttstats))
 
     def returnval(self):
-        json_dict = {"type": "hub_status", "serial_number": self.serialnum, "type": self.typee, "firmware_revision": self.firmwarerev, "uptime": self.uptime,
-                    "rssi": self.rssi, "timestamp": self.timestamp, "reset_flags": self.resetflags,
-                    "seq": self.seq, "fs": self.fs,"Version": self.version, "Reboot Count":self.rebootcount,
-                    "I2C Bus Error Count": self.buserror, "Radio_Power": self.radiopower, "MQTT_STATS": self.mqttstats}
+        json_dict = {
+            "serial_number": self.serialnum,
+            "type": "hub_status",
+            "firmware_revision": self.firmwarerev,
+            "uptime": self.uptime,
+            "rssi": self.rssi,
+            "timestamp": self.timestamp,
+            "reset_flags": self.resetflags,
+            "seq": self.seq,
+            "fs": self.fs,
+            "Version": self.version,
+            "Reboot Count":self.rebootcount,
+            "I2C Bus Error Count": self.buserror,
+            "Radio_Power": self.radiopower,
+            "MQTT_STATS": self.mqttstats}
         return json_dict

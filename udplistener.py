@@ -6,14 +6,40 @@ import json
 import argparse
 import socket
 import sys
-from sendtocloud import sendMessageToQueue
+import time
+from sendtocloud import sendWeatherData, sendWindBeringData
 # PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
 
 allowedMessageTypes = ["evt_precip", "evt_strike", "rapid_wind",
- "obs_air", "obs_sky", "device_status", "hub_status"]
+ "obs_air", "obs_sky", "device_status", "hub_status"];
 
-# with open(PATH_JSON + 'air.json') as json_data:
-#     json_data = json.load(json_data)
+# list of dict for wind ave data
+listOfPackets = [];
+
+start_time = time.time()
+
+# add data to list as dict
+def processWindDataAve(widdir, wdspd, tim):
+    packet = { "bering": widdir, "speed": wdspd, "time": tim }
+    listOfPackets.append(packet)
+
+# calculate average and post to topic
+def calculateAvg():
+    under = []
+    count = 0
+    total = 0
+    # time in seconds
+    elasped = (time.time() - start_time) 
+    for entry in listOfPackets:
+        if(entry["time"] < (start_time + 600)):
+            count += 1
+            total += entry["bering"]
+            under.append(entry)
+    listOfPackets = under
+    start_time = time.time()
+    average = total / count
+    ave = { "average": average, "time": start_time }
+    sendWindBeringData(ave)
 
 def sorter(json_in):
     event_type = json_in['type']
@@ -53,6 +79,13 @@ def sorter(json_in):
         typee = json_in['type']
         hubsn = json_in['hub_sn']
         ob = json_in['ob']
+
+        tim = self.ob[0]
+        wdspd = self.ob[1]
+        widdir = self.ob[2]
+        processWindDataAve(widdir, wdspd, tim)
+
+
         wind = udpclasses.Rapid_wind(serialnum,typee,hubsn,ob)
         #Convert to Json object
         jsonStr = json.dumps(wind.returnval())
@@ -151,8 +184,10 @@ def startloop():
                     #obs = json_data["type"]
                     #print("obs decoded {}".format(obs))
                     if json_data['type'] in allowedMessageTypes:
-                        sendMessageToQueue(pushvar)
+                        sendWeatherData(pushvar)
                         print(pushvar)
+                if(start_time + 600 < time.time()):
+                    calculateAvg()
             #socket timeout exception here
             except socket.timeout:
                 print("Socket timeout 120 seconds with no messages")
