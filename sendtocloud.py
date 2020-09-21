@@ -30,7 +30,7 @@ def sendWindBeringData(msg):
     try:
         bus_service = ServiceBusService(
         service_namespace='kanmessagebus',
-        shared_access_key_name='bering',
+        shared_access_key_name='client',
         shared_access_key_value='dNj7Z+fOvV49WNETUL0Guj3KVVdZude/fqzmj95GHKo=')
 
         mesage = Message(msg)

@@ -173,13 +173,21 @@ class Obs_sky:
     #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
     #Hemisphere and we are using this device in the Southern Hemisphere.
     def transform_winddir(self):
+        # if wind direction is greater than 180
         if self.windDir > 180:
+            # remove 180 from wind dir
             self.windDir = self.windDir - 180
+        # if wind direction is less than 180 
         elif self.windDir < 180:
+            # add 180 to wind dir
             self.windDir = self.windDir + 180
+        # if the wind is at 0/360
         elif self.windDir == 0 or self.windDir == 360:
+            # set the dir to 180
             self.windDir == 180
+        # if wind dir is 180
         elif self.windDir == 180:
+            # set to 0/360
             self.windDir == 0
 
     def printme(self):
@@ -189,7 +197,6 @@ class Obs_sky:
         json_dict = {
             "serial_number": self.serial_number,
             "type":"obs_sky",
-            "type": self.typee,
             "hub_sn": self.hub_sn, 
             "Epoch": self.timeep,
             "Illuminance": self.illum,

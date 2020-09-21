@@ -14,32 +14,69 @@ allowedMessageTypes = ["evt_precip", "evt_strike", "rapid_wind",
  "obs_air", "obs_sky", "device_status", "hub_status"];
 
 # list of dict for wind ave data
-listOfPackets = [];
+listOfPackets = []
 
 start_time = time.time()
 
 # add data to list as dict
+# correct wind direction for Southern Hemisphere
+# the solar pannel requires the instalation to be 180 degrees out from north marker
 def processWindDataAve(widdir, wdspd, tim):
+    # if wind direction is greater than 180
+    if widdir > 180:
+        # remove 180 from wind dir
+        widdir = widdir - 180
+    # if wind direction is less than 180 
+    elif widdir < 180:
+        # add 180 to wind dir
+        widdir = widdir + 180
+    # if the wind is at 0/360
+    elif widdir == 0 or widdir == 360:
+        # set the dir to 180
+        widdir == 180
+    # if wind dir is 180
+    elif widdir == 180:
+        # set to 0/360
+        widdir == 0
     packet = { "bering": widdir, "speed": wdspd, "time": tim }
     listOfPackets.append(packet)
 
 # calculate average and post to topic
 def calculateAvg():
-    under = []
-    count = 0
-    total = 0
-    # time in seconds
-    elasped = (time.time() - start_time) 
-    for entry in listOfPackets:
-        if(entry["time"] < (start_time + 600)):
-            count += 1
-            total += entry["bering"]
-            under.append(entry)
-    listOfPackets = under
-    start_time = time.time()
-    average = total / count
-    ave = { "average": average, "time": start_time }
-    sendWindBeringData(ave)
+    global start_time
+    if(start_time + 240 < time.time()):
+        global listOfPackets
+        under = []
+        count = 0
+        total_bearing = 0
+        total_speed = 0
+
+        for entry in listOfPackets:
+            # if the time stored is less than last run pus 10 mins
+            if(entry["time"] < (start_time + 600)):
+                count += 1
+                total_speed += entry["speed"]
+                total_bearing += entry["bering"]
+                under.append(entry)
+            else:
+                print("older than "+ (start_time + 600))
+        # remove all packets over 10 mins
+        listOfPackets = under
+        # reset start time
+        start_time = time.time()
+        # calculate average
+        if(total_bearing != 0 and total_speed != 0):
+            average = total_bearing / count
+            speed_avg = total_speed / count
+            print("AVERAGE BEARING: {} speed: {}".format(average, speed_avg))
+            ave = { 
+                "bering_average": average,
+                "speed_average": speed_avg,
+                "time": start_time 
+            }
+            pacAve = json.dumps(ave)
+            sendWindBeringData(pacAve)
+            print("SENDING AVG")
 
 def sorter(json_in):
     event_type = json_in['type']
@@ -80,9 +117,9 @@ def sorter(json_in):
         hubsn = json_in['hub_sn']
         ob = json_in['ob']
 
-        tim = self.ob[0]
-        wdspd = self.ob[1]
-        widdir = self.ob[2]
+        tim = ob[0]
+        wdspd = ob[1]
+        widdir = ob[2]
         processWindDataAve(widdir, wdspd, tim)
 
 
@@ -186,8 +223,9 @@ def startloop():
                     if json_data['type'] in allowedMessageTypes:
                         sendWeatherData(pushvar)
                         print(pushvar)
-                if(start_time + 600 < time.time()):
-                    calculateAvg()
+                time_now = time.time()
+
+                calculateAvg()
             #socket timeout exception here
             except socket.timeout:
                 print("Socket timeout 120 seconds with no messages")
