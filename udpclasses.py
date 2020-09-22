@@ -6,12 +6,14 @@ import json
 #This class is catering to the event of precipitation
 class Evt_precip:
 
-    def __init__(self,serial_number,typee,hub_sn,evt):
+    def __init__(self,serial_number,typee,hub_sn,evt, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.evt = evt
+        self.rec = rec
         self.unpacker()
+
 
     def unpacker(self):
         self.timeep = self.evt[0]
@@ -28,18 +30,20 @@ class Evt_precip:
             "serial_number": self.serial_number,
             "type": "evt_precip",
             "hub_sn": self.hub_sn, 
-            "Time_Epoch": self.timeep
+            "Time_Epoch": self.timeep,
+            "rec": self.rec
             }
         return json_dict
 
 #This class is catering to the event of Lightning Strike
 class Evt_strike:
 
-    def __init__(self,serial_number,typee,hub_sn,evt):
+    def __init__(self,serial_number,typee,hub_sn,evt, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.evt = evt
+        self.rec = rec
         self.unpacker()
 
     def unpacker(self):
@@ -57,18 +61,20 @@ class Evt_strike:
             "hub_sn": self.hub_sn, 
             "Time_Epoch": self.timeep,
             "Distance": self.Distance,
-            "Energy": self.Energy
+            "Energy": self.Energy,
+            "rec": self.rec
             }
         return json_dict
 
 #This class is catering to the event of High Winds
 class Rapid_wind:
 
-    def __init__(self,serial_number,typee,hub_sn,ob):
+    def __init__(self,serial_number,typee,hub_sn,ob, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.ob = ob
+        self.rec = rec
         self.unpacker()
         self.transform_winddir()
 
@@ -87,7 +93,9 @@ class Rapid_wind:
             "hub_sn": self.hub_sn,
             "Time_Epoch": self.timeep,
             "Wind_Speed": self.windspeed,
-            "Wind_Direction": self.winddirn}
+            "Wind_Direction": self.winddirn,
+            "rec": self.rec
+            }
         return json_dict
 
     #Wind Direction has been flipped by 180Degrees because the weatherflow tempest unit was designed in the Northern
@@ -105,12 +113,13 @@ class Rapid_wind:
 #This class is catering to the event of Observing Air
 class Obs_air:
 
-    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
+    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.obs = obs
         self.firmware_revision = firmware_revision
+        self.rec = rec
         self.unpacker()
 
     def unpacker(self):
@@ -139,18 +148,21 @@ class Obs_air:
             "Lightning_Strike_Avg_Distance": self.lgtnstrikedist_avg,
             "Battery": self.battery,
             "Report_Interval": self.reportint,
-            "firmware_revision": self.firmware_revision}
+            "firmware_revision": self.firmware_revision,
+            "rec": self.rec
+            }
         return json_dict
 
         #This class is catering to the event of Observing the Sky
 class Obs_sky:
 
-    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision):
+    def __init__(self,serial_number,typee,hub_sn,obs,firmware_revision, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
         self.obs = obs
         self.firmware_revision = firmware_revision
+        self.rec =rec
         self.unpacker()
         self.transform_winddir()
 
@@ -212,7 +224,8 @@ class Obs_sky:
             "Local_Day_Rain_Accumulation": self.locrainAccum,
             "Precipitation_Type": self.precipType, 
             "Wind_Sample_Interval": self.windSampInt,
-            "firmware_revision": self.firmware_revision
+            "firmware_revision": self.firmware_revision,
+            "rec": self.rec
             }
         return json_dict
 
@@ -220,7 +233,7 @@ class Obs_sky:
 class Device_status:
 
     def __init__(self, serial_number, typee, hub_sn, timestamp, uptime,
-                    voltage, firmware_revision, rssi, hub_rssi, sensor_status, debug):
+                    voltage, firmware_revision, rssi, hub_rssi, sensor_status, debug, rec):
         self.serial_number = serial_number
         self.typee = typee
         self.hub_sn = hub_sn
@@ -231,6 +244,7 @@ class Device_status:
         self.rssi = rssi
         self.hub_rssi = hub_rssi
         self.sensor_status = sensor_status
+        self.rec = rec
         self.debug = debug
         if self.debug == 0:
             self.debug = "Debugging is disabled"
@@ -244,7 +258,6 @@ class Device_status:
         json_dict = {
             "type":"device_status",
             "serial_number": self.serial_number,
-            "type": self.typee,
             "hub_sn": self.hub_sn,
             "timestamp": self.timestamp,
             "uptime": self.uptime,
@@ -253,14 +266,16 @@ class Device_status:
             "rssi": self.rssi,
             "hub_rssi": self.hub_rssi,
             "sensor_status": self.sensor_status,
-            "debug": self.debug}
+            "debug": self.debug,
+            "rec": self.rec
+            }
         return json_dict
 
 #This class is catering to the monitoring the Hub Status
 class Hub_status:
 
     def __init__(self, serialnum, typee, firmwarerev, uptime,rssi, timestamp, resetflags, seq, fs,
-                                radiostats, mqttstats):
+                                radiostats, mqttstats, rec):
         self.serialnum = serialnum
         self.typee = typee
         self.firmwarerev = firmwarerev
@@ -272,6 +287,7 @@ class Hub_status:
         self.fs = fs
         self.radiostats = radiostats
         self.mqttstats = mqttstats
+        self.rec = rec
         self.unpacker()
 
     def unpacker(self):
@@ -304,5 +320,7 @@ class Hub_status:
             "Reboot Count":self.rebootcount,
             "I2C Bus Error Count": self.buserror,
             "Radio_Power": self.radiopower,
-            "MQTT_STATS": self.mqttstats}
+            "MQTT_STATS": self.mqttstats,
+            "rec": self.rec
+            }
         return json_dict

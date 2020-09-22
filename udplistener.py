@@ -11,7 +11,7 @@ from sendtocloud import sendWeatherData, sendWindBeringData
 # PATH_JSON = "C:\\Gaurang\\WeatherStation\\"
 
 allowedMessageTypes = ["evt_precip", "evt_strike", "rapid_wind",
- "obs_air", "obs_sky", "device_status", "hub_status"];
+ "obs_air", "obs_sky", "device_status", "hub_status"]
 
 # list of dict for wind ave data
 listOfPackets = []
@@ -91,7 +91,7 @@ def sorter(json_in):
         typee = json_in['type']
         hubsn = json_in['hub_sn']
         event = json_in['evt']
-        prec = udpclasses.Evt_precip(serialnum, typee, hubsn, event)
+        prec = udpclasses.Evt_precip(serialnum, typee, hubsn, event, time.time())
         #Convert to Json object
         jsonStr = json.dumps(prec.returnval())
         #Check with Glen
@@ -105,7 +105,7 @@ def sorter(json_in):
         typee = json_in['type']
         hubsn = json_in['hub_sn']
         event = json_in['evt']
-        strike = udpclasses.Evt_strike(serialnum,typee,hubsn,event)
+        strike = udpclasses.Evt_strike(serialnum,typee,hubsn,event, time.time())
         #Convert to Json object
         jsonStr = json.dumps(strike.returnval())
 
@@ -123,7 +123,7 @@ def sorter(json_in):
         processWindDataAve(widdir, wdspd, tim)
 
 
-        wind = udpclasses.Rapid_wind(serialnum,typee,hubsn,ob)
+        wind = udpclasses.Rapid_wind(serialnum,typee,hubsn,ob, time.time())
         #Convert to Json object
         jsonStr = json.dumps(wind.returnval())
         
@@ -135,7 +135,7 @@ def sorter(json_in):
         hubsn = json_in['hub_sn']
         obs = json_in['obs']
         firmwarerev = json_in['firmware_revision']
-        air = udpclasses.Obs_air(serialnum,typee,hubsn,obs,firmwarerev)
+        air = udpclasses.Obs_air(serialnum,typee,hubsn,obs,firmwarerev, time.time())
         #Convert to Json object
         jsonStr = json.dumps(air.returnval())
     
@@ -148,7 +148,7 @@ def sorter(json_in):
         obs = json_in['obs']
         firmwarerev = json_in['firmware_revision']
         #Feed into CLass
-        sky = udpclasses.Obs_sky(serialnum,typee,hubsn,obs, firmwarerev)
+        sky = udpclasses.Obs_sky(serialnum,typee,hubsn,obs, firmwarerev, time.time())
         #Convert to Json object
         jsonStr = json.dumps(sky.returnval())
     
@@ -168,7 +168,7 @@ def sorter(json_in):
         debug = json_in['debug']
         #Feed into CLass
         device = udpclasses.Device_status(serialnum,typee,hubsn,timestamp,uptime,voltage,
-                                firmwarerev,rssi,hub_rssi,sensor_status,debug)
+                                firmwarerev,rssi,hub_rssi,sensor_status,debug, time.time())
         #Convert to Json object
         jsonStr = json.dumps(device.returnval())
 
@@ -188,7 +188,7 @@ def sorter(json_in):
         mqttstats = json_in['mqtt_stats']
         #Feed into CLass
         hub = udpclasses.Hub_status(serialnum,typee, firmwarerev,uptime,rssi,timestamp,resetflags,seq,fs,
-                                radiostats,mqttstats)
+                                radiostats,mqttstats, time.time())
         #Convert to Json object
         jsonStr = json.dumps(hub.returnval())
 
